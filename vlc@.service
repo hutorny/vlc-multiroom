@@ -1,0 +1,29 @@
+[Unit]
+Description=VLC Audio Player
+After=network.target
+
+[Service]
+Type=forking
+User=vlc
+PermissionsStartOnly=true
+#ExecStartPre is required only if file logging is turned on
+#ExecStartPre=-/bin/mkdir -p /var/log/vlc/
+#ExecStartPre=-/bin/chown -R vlc /var/log/vlc/
+#~vlc does not work, %h is not relevant, thus, using /home/vlc/
+EnvironmentFile=/home/vlc/vlc-%i.svc
+#dbus wants this, although it does not help
+Environment=DISPLAY=:0
+#Makes non-en file names readable in the browser
+Environment=LANG=en_US.UTF-8
+ExecStart=/usr/bin/vlc --daemon \
+  --pidfile /var/run/vlc-%i.pid \
+  --novideo --no-sout-video \
+  --intf http --http-port 909%i --http-password="${HTTP_PASSWORD}" --http-src /usr/share/vlc/lua/http/ \
+  --aout alsa --alsa-audio-device="${AUDIO_DEVICE}" \
+# -vvv --extraintf=http:logger --file-logging  --logfile=/var/log/vlc/vlc-%i.log
+
+Restart=on-abort
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

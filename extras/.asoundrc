@@ -1,0 +1,17 @@
+# With multiple sound cards, list of ALSA devices may become too long 
+# to fit on the screen.
+# As a workaround, hide surround virtual devices with this configuration
+# cat extras/.asoundrc >> .asoundrc
+pcm.!surround21.type = null
+pcm.!surround21.name = null
+pcm.!surround40.type = null
+pcm.!surround40.name = null
+pcm.!surround41.type = null
+pcm.!surround41.name = null
+pcm.!surround50.type = null
+pcm.!surround50.name = null
+pcm.!surround51.type = null
+pcm.!surround51.name = null
+pcm.!surround71.type = null
+pcm.!surround71.name = null
+
